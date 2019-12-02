@@ -7,6 +7,7 @@ use App\Post;
 use App\Image;
 use App\Comment;
 use App\Tag;
+use Gate;
 
 class PostController extends Controller
 {
@@ -32,6 +33,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
+        
         $post->save();
         $tag = new Tag();
         $tag->name = $request->name;
@@ -57,7 +59,7 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        $post->delete();
+        $post->delete();     
         return redirect('post');
     }
 
@@ -65,7 +67,19 @@ class PostController extends Controller
         $post = Post::find($id);
         $comment = new Comment();        
         $comment->body = $request->cbody;
+        $comment->user_id = Auth()->user()->id;
         $post->comments()->save($comment);
         return redirect('post');
+    }
+
+    public function gate(comment $comment,$id)
+    {
+        $comment = Comment::find($id);
+        if(Gate::allows('owner',$comment)){
+            $comment->delete();
+        }else{
+            return 'hello';
+        }
+        return redirect('/post');
     }
 }

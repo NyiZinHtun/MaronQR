@@ -11,7 +11,14 @@
             </div> 
             <div class="panel-footer">
                 @foreach($post->comments as $comment)
-                    {{ $comment->body }} <br>
+                    {{ $comment->body }}
+                   <div class="pull-right">
+                        <form action="{{ 'comment/'. $comment->id }}" method="post">
+                            {{ method_field('DELETE') }}
+                            {{ csrf_field() }}
+                            <button type="submit" class="pull-right">Delete</button>
+                        </form>
+                   </div><br>
                 @endforeach
             </div> 
         </div>

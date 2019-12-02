@@ -23,6 +23,7 @@ Route::resource('region','RegionController');
 Route::post('store/{id}','PostController@storeComment');
 Route::post('vstore/{id}','VideoController@vstoreComment');
 Route::get('qrcode','VideoController@qrshow');
+Route::delete('comment/{id}','PostController@gate');
 
 Auth::routes();
 
