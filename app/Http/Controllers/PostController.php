@@ -78,7 +78,7 @@ class PostController extends Controller
         if(Gate::allows('owner',$comment)){
             $comment->delete();
         }else{
-            return 'hello';
+            abort(403);
         }
         return redirect('/post');
     }
