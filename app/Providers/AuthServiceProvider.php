@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,6 +28,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('owner',function($user,$comment){
             return $user->id == $comment->user_id;
+        });
+
+        Gate::define('edit',function($user){
+            return $user->email == 'admin@gmail.com';
         });
     }
 }

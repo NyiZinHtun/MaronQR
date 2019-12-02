@@ -47,14 +47,21 @@ class PostController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('post.edit',compact('post'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,Post $post)
     {
-        //
+        $response = Gate::inspect('edit',$post);
+        if($response->allowed()){
+            $post->update(request(['title','body']));
+        }else{
+            echo $response->message();
+        }
+       
+        return redirect('/post');
     }
 
     public function destroy(Post $post)
