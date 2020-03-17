@@ -8,6 +8,7 @@ class Tag extends Model
 {
     protected $fillable=['name'];
 
+    // Get all of the posts that are assigned this tag.
     public function posts()
     {
         return $this->morphedByMany('App\Post', 'taggable');

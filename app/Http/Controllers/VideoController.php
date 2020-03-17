@@ -68,6 +68,7 @@ class VideoController extends Controller
         $video = Video::find($id);
         $comment = new Comment();
         $comment->body = $request->cbody;
+        $comment->user_id = Auth()->user()->id;
         $video->comments()->save($comment); 
         return redirect('video');
     }
